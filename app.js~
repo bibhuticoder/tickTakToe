@@ -1,0 +1,146 @@
+var app = require( 'express' )();
+var path = require( 'path' );
+var bodyParser = require( 'body-parser' ); // for reading Posted form data into `req.body`
+var expressSession = require( 'express-session' );
+var cookieParser = require( 'cookie-parser' ); // the session is stored in a cookie, so we use this to parse it
+var http = require( 'http' ).Server( app );
+var io = require( 'socket.io' )( http );
+
+
+// must use cookieParser before expressSession
+app.use( cookieParser() );
+app.use( bodyParser.json() );
+app.use( bodyParser.urlencoded( { extended: false } ) );
+app.use( expressSession( { secret: 'somesecrettokenhere' } ) );
+app.use( require( 'express' ).static( path.join( __dirname, 'public' ) ) );
+
+// view engine setup .. setup ejs engine
+app.set( 'views', path.join( __dirname, 'views' ) );
+app.set( 'view engine', 'ejs' );
+
+
+// array to store the current rooms
+var rooms = {};
+
+app.get( '/', function ( req, res ) {
+
+    res.render( 'login' );
+
+} );
+
+
+app.post( '/play', function ( req, res ) {
+
+    var username = req.body.username;
+    var room = req.body.roomName;
+    
+    if(rooms[room]){ // if the room exists -> proceed for room joining
+        
+        if(rooms[room].length <=2 ){ // if only 1 member in room : join
+            res.render( 'index', {username: username, room:room} );   
+        }
+        else{ // room packed
+            res.send("The room you requested for is already packed");
+        }
+    }
+    else{ // if not -> proceed for room creation
+        res.render( 'index', {username: username, room:room} );   
+    }
+    
+
+} );
+
+
+app.get( '*', function ( req, res ) {
+    res.render( 'login' );
+} );
+
+io.on( 'connection', function (socket) {
+    
+    //when user connects to the socket io
+    socket.on('userIncoming', function(data){
+                
+        var room = data.roomName;
+        var username = data.username;
+        
+        var numOfRooms = rooms.length;
+        if(numOfRooms === 0){ // if there are no rooms
+            
+            //create a new room and add the user
+            createAdd(socket, room, username);
+        }
+        
+        else{ //if rooms already exists
+            
+            //check if the rooms matches
+            console.log("Checking for " + room);
+            if(rooms[room]){ // if exists
+                 if(rooms[room].indexOf(username) < 0){               
+                    addExisting(socket, room, username); 
+                     console.log("Joined");
+                 }
+                else{
+                    io.in(socket.room).emit('partnerIncoming',{player1:rooms[room][0], player2:rooms[room][1]});
+                }
+                
+            }
+            
+            else{
+                createAdd(socket, room, username);
+            } 
+            
+            
+        }
+     
+    });
+    
+    socket.on( 'clicked', function (index) {
+        socket.broadcast.to(socket.room).emit( "clicked",index);
+       
+    } );
+
+    socket.on( 'winner', function (data) {
+        //when clicked on the cell
+        socket.broadcast.to(socket.room).emit( "winner",data);
+    } );
+    
+    socket.on( 'restart', function (data) {
+
+        io.emit( "restart",data);
+    } );
+
+    
+} );
+
+io.on('disconnect',function(socket){
+        
+});
+
+
+function createAdd(socket, room, username){
+    
+                    rooms[room] =[username];
+                    console.log("new room created");
+                    console.log(rooms);
+                    socket.username = username;
+                    socket.room = room;
+                    socket.join(room);
+                    io.emit('roomCreatorIncoming',{username:username});
+    
+}
+function addExisting(socket, room, username){
+                    socket.username = username;
+                    socket.room = room;
+                    rooms[room].push(username);
+                    socket.join(room);
+                    console.log("existing room joined");
+                    var player1 = rooms[room][0]; 
+                    console.log(player1 + " " + username)
+                    io.in(socket.room).emit('partnerIncoming',{player1:player1, player2:username});
+    
+}
+
+var port = process.env.PORT || 3000;
+http.listen( port );
+console.log( "Listening to port " + port );
+

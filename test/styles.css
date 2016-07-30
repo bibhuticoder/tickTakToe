@@ -1,0 +1,147 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.topBar {
+    height: 50px;
+    width: 100%;
+    background-color: #3a3a3a;
+    padding-top: 8px;
+}
+
+.btnTopbar {
+    margin-right: 10px;
+    margin-left: 10px;
+    float: right;
+}
+
+.topBar label {
+    float: left;
+    color: white;
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: normal;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+#boardContainer {
+    padding: 5px;
+    float: left;
+}
+
+#board {
+    height: auto;
+    width: auto;
+    background-color: #3a3a3a;
+    float: left;
+    padding: 10px;
+}
+
+.cell {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 2px;
+    background-color: white;
+    cursor: pointer;
+    float: left;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.cell-winner {
+    border-color: red;
+    border-width: 2px;
+}
+
+.cell:hover {
+    border-color: #373737;
+    border-width: 2px;
+}
+
+.cell-9 {
+    height: 40px;
+    width: 40px;
+    font-size: 20px;
+    line-height: 40px;
+}
+
+.cell-7 {
+    height: 50px;
+    width: 50px;
+    font-size: 25px;
+    line-height: 50px;
+}
+
+.cell-5 {
+    height: 60px;
+    width: 60px;
+    font-size: 30px;
+    line-height: 60px;
+}
+
+.cell-3 {
+    height: 80px;
+    width: 80px;
+    font-size: 40px;
+    line-height: 80px;
+}
+
+#scoreBoard {
+    float: right;
+    margin-top: 5px;
+}
+
+#playerDataSeperator {
+    font-size: 30px;
+    color: whitesmoke;
+    font-weight: bolder;
+    height: 30px;
+    float: left;
+}
+
+.player {
+    background-color: black;
+    color: white;
+    padding: 5px;
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+
+.player .name {
+    font-size: 15px;
+    float: left;
+    height: 35px;
+    line-height: 35px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.player .score {
+    background-color: white;
+    color: #373737;
+    font-family: monospace;
+    text-align: center;
+    height: 35px;
+    width: 35px;
+    font-size: 20px;
+    line-height: 35px;
+    float: left;
+    border-radius: 100%;
+}
+
+#alertBox {
+    text-align: center;
+    width: 90%;
+    margin-left: 5%;
+    float: left;
+}
+
+#btnRestart {
+    margin-left: 50px;
+}

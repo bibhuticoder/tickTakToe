@@ -1,0 +1,27 @@
+.topBar {
+    height: 50px;
+    width: 100%;
+    background-color: #3a3a3a;
+    padding-top: 8px;
+}
+
+.btnTopbar {
+    margin-right: 10px;
+    margin-left: 10px;
+    float: right;
+}
+
+.topBar label {
+    float: left;
+    color: white;
+    font-size: 15px;
+    font-family: sans-serif;
+    font-weight: normal;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.green{
+    color: #7AAC41;
+    font-size: 20px;
+}

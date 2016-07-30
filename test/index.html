@@ -1,0 +1,46 @@
+<html>
+<title>Tick-Tak-Toe</title>
+
+<head>
+
+</head>
+
+<body>
+    <div class="topBar" id="topBar">
+        <label id="room">Tick-Tak-Toe @ room</label>
+
+        <div id="scoreBoard">
+            <div class="player">
+                <div id="player1Name" class="name">Raman</div>
+                <div id="player1Score" class="score">10</div>
+            </div>
+            <div id="playerDataSeperator">Vs</div>
+            <div class="player">
+                <div id="player2Score" class="score">6</div>
+                <div id="player2Name" class="name">Hari</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="boardContainer">
+        <div id="board">
+        </div>
+    </div>
+
+    <br>
+    <div class="alert alert-success" id="alertBox">
+        <label id="alertMessage">Its a draw</label>
+        <button class="btn btn-success" id="btnRestart">Restart</button>
+    </div>
+
+    <label id="server-roomName" hidden="hidden"></label>
+    <label id="server-playerName" hidden="hidden"></label>
+    <label id="server-boardSize" hidden="hidden"></label>
+
+    <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css" />
+</body>
+
+</html>

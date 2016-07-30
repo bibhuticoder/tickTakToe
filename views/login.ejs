@@ -1,0 +1,78 @@
+<html>
+<title>Tick-Tak-Toe</title>
+<body>
+    <div class="topBar">
+        <label>Tick-Tak-Toe</label>
+        <a href="/about" target="_blank" class="btn btn-success btnTopbar">?</a>
+    </div>
+
+    <div class="container" style="text-align:center">
+        <br>
+        <br>
+        <br>
+        <p class="lead" id="title">Tick-Tak-Toe</p>
+        <p class="lead">Multiplayer tick-tak-toe game in JavaScript with nodeJS and Socket.io.</p>
+        <br>
+        <div class="input">
+            <input type="text" class="form-control textBox" placeholder="Your name here...." autocomplete="off" id="username" />
+            <br>
+            <input type="text" class="form-control textBox" placeholder="Name of room you want to enter/create" autocomplete="off" id="roomname" />
+            <br>
+            <label for="level">Board Size</label>
+
+            <select class="form-control" id="boardSize">
+                <option>3 x 3</option>
+                <option>5 x 5</option>
+                <option>7 x 7</option>
+                <option>9 x 9</option>
+            </select>
+            <br>
+            <br>
+            <button class="btn btn-success btn-lg" id="btnEnter"> <span class="glyphicon glyphicon-chevron-left"></span> Enter Room <span class="glyphicon glyphicon-chevron-right"></span> </button>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="stylesheets/topbar.css">
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+
+
+    <script type="text/javascript" src="javascripts/jquery-1.11.3.min.js"></script>
+    <script>
+        $("#btnEnter").click(function () {
+            enter();
+        });
+        
+        $("#username").keydown(function(e){            
+            if(e.keyCode === 13) enter();            
+        });
+        
+        $("#roomname").keydown(function(e){            
+            if(e.keyCode === 13) enter();            
+        });
+        
+        function enter(){
+            var username = $("#username").val();
+            var roomname = $("#roomname").val();
+            var boardSize = $("#boardSize").val();
+
+            $.post("/verify", {
+                roomname: roomname,
+                username: username,
+                boardSize: boardSize
+            }, function (data) {
+                if (data.type === 'success') {
+                    console.log(data.msg);
+                    $('<form action="/play" method="POST">' +
+                        '<input type="hidden" name="username" value="' + username + '">' +
+                        '<input type="hidden" name="roomname" value="' + roomname + '">' +
+                        '<input type="hidden" name="boardSize" value="' + boardSize + '">' +
+                        '</form>').submit();
+                } else {
+                    alert(data.msg);
+                }
+            });
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+<title>Tick-Tak-Toe</title>
+<head>
+</head>
+<body>
+   
+    <div class="topBar" id="topBar">
+         <label id="room"><span class="green">(Beta) Tick-Tak-Toe</span>  <%=username%> @ <%=roomname%></label>
+        <div id="scoreBoard">
+            <div class="player">
+                <div id="player1Name" class="name"></div>
+                <div id="player1Score" class="score">0</div>
+            </div>
+            <div id="playerDataSeperator">Vs</div>
+            <div class="player">
+                <div id="player2Score" class="score">0</div>
+                <div id="player2Name" class="name"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="boardContainer">
+       <div id="turn"><%=turn %></div>
+        <div id="board">
+        </div>
+    </div>
+
+    <br>
+    <div class="alert alert-success" id="alertBox">
+        <label id="alertMessage">Its a draw</label>
+        <button class="btn btn-success" id="btnRestart">Restart</button>
+    </div>
+
+    <label id="server-roomname" hidden="hidden"><%=roomname%></label>
+    <label id="server-username" hidden="hidden"><%=username%></label>
+    <label id="server-boardSize" hidden="hidden"><%=boardSize%></label>
+    <label id="server-role" hidden="hidden"><%=role%></label>
+    <label id="server-turn" hidden="hidden"><%=turn%></label>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="javascripts/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="stylesheets/topbar.css" />
+    <link rel="stylesheet" href="stylesheets/styles.css" />
+    <script type="text/javascript" src="javascripts/script.js"></script>
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css" />
+</body>
+</html>
